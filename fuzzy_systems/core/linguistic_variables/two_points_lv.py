@@ -27,5 +27,9 @@ class TwoPointsPDLV(LinguisticVariable):
     """
 
     def __init__(self, name, p, d):
-        assert False, "TODO student"
-        })
+        ling_values_dict = {
+            "low:": LinPWMF([p, 1], [p+d, 0]),
+            "high": LinPWMF([p, 0], [p+d, 1])
+        }
+        args = name, ling_values_dict
+        super().__init__(*args)

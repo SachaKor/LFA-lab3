@@ -25,5 +25,10 @@ class ThreePointsLV(LinguisticVariable):
     """
 
     def __init__(self, name, p1, p2, p3):
-        assert False, "TODO student"
-        })
+        ling_values_dict = {
+            "low": LinPWMF([p1, 1], [p2, 0]),
+            "medium": LinPWMF([p1, 0], [p2, 1], [p3, 0]),
+            "high": LinPWMF([p2, 0], [p3, 1])
+        }
+        args = name, ling_values_dict
+        super().__init__(*args)
