@@ -26,10 +26,18 @@ class TwoPointsPDLV(LinguisticVariable):
 
     """
 
-    def __init__(self, name, p, d):
+    def __init__(self, name, p, d, n1="low", n2="high"):
+        """
+        :param p: first point of the LV: "low" part of the MF is 1 at this
+        point, "high" part is 0
+        :param d: distance between the points where "low" and "high" parts
+        parts of the MF
+        :param n1: name of the first ("low") part of the MF
+        :param n2: name of the second ("high") part of the MF
+        """
         ling_values_dict = {
-            "low:": LinPWMF([p, 1], [p+d, 0]),
-            "high": LinPWMF([p, 0], [p+d, 1])
+            n1: LinPWMF([p, 1], [p+d, 0]),
+            n2: LinPWMF([p, 0], [p+d, 1])
         }
         args = name, ling_values_dict
         super().__init__(*args)

@@ -1,6 +1,7 @@
 from collections import defaultdict
 from copy import deepcopy
 from typing import Dict, List, Callable, Tuple
+import numpy as np
 
 from fuzzy_systems.core.membership_functions.free_shape_mf import FreeShapeMF
 from fuzzy_systems.core.rules.fuzzy_rule_element import Antecedent, Consequent
@@ -60,7 +61,28 @@ class FuzzyRule:
 
         fuzzified_inputs_for_rule = []
 
-        assert False, "TODO student"
+        for (lv_name, crisp_input) in crisp_inputs.items():
+            # this flag is set to True if the LV with a given name exists in
+            # the antecendent list
+            lv_exists = False
+            # membership function of the linguistic value
+            mf = None
+            is_not = False
+            for ant in self._ants:
+                # find the corresponding LV in the antecedents list
+                if(ant.lv_name.name == lv_name):
+                    lv_exists = True
+                    lvalue_dict = ant.lv_name.ling_values
+                    mf = lvalue_dict[ant.lv_value]
+                    if(ant.is_not == True):
+                        is_not = True
+                    break
+            assert lv_exists == True, "Invalid linguistic variable name"
+            fuzzified_value = np.interp(crisp_input, mf.in_values, mf.mf_values)
+            if(is_not == True):
+                fuzzified_value = 1 - fuzzified_value
+            fuzzified_inputs_for_rule.append(fuzzified_value)
+
         return fuzzified_inputs_for_rule
 
     def activate(self, fuzzified_inputs):

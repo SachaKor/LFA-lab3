@@ -24,11 +24,26 @@ class ThreePointsLV(LinguisticVariable):
 
     """
 
-    def __init__(self, name, p1, p2, p3):
+    def __init__(self, name, p1, p2, p3, n1="low", n2="medium", n3="high"):
+        """
+        :param name: name of the linguistic variable (e.g. "Temperature")
+        :param p1: 1st point of the LV: "low" part of the membership function
+        is 1 at this point, "medium" part of the membership function is 0 at
+        this point
+        :param p2: 2nd point of the LV: "low" and ""high" parts of the
+        membership function are 0 at this point, "medium" part is 1
+        :param p3: 3d point of the LV: "medium" part of the MF is 0 at this
+        point, "high" part is 1
+        :param n1: name of the fist ("low") part of the MF
+        :param n2: name of the second ("medium") part of the MF
+        :param n2: name of the third ("high") part of the MF
+        """
+        assert p1 < p2 < p3, "Points values have to be given in the increasing order"
+
         ling_values_dict = {
-            "low": LinPWMF([p1, 1], [p2, 0]),
-            "medium": LinPWMF([p1, 0], [p2, 1], [p3, 0]),
-            "high": LinPWMF([p2, 0], [p3, 1])
+            n1: LinPWMF([p1, 1], [p2, 0]),
+            n2: LinPWMF([p1, 0], [p2, 1], [p3, 0]),
+            n3: LinPWMF([p2, 0], [p3, 1])
         }
         args = name, ling_values_dict
         super().__init__(*args)
