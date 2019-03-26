@@ -78,8 +78,7 @@ class FuzzyRule:
                     lv_exists = True
                     lvalue_dict = ant.lv_name.ling_values
                     mf = lvalue_dict[ant.lv_value]
-                    if(ant.is_not == True):
-                        is_not = True
+                    is_not = ant.is_not
                     break
             if(lv_exists == False):
                 assert lv_exists == True, "Invalid linguistic variable name: " + lv_name
