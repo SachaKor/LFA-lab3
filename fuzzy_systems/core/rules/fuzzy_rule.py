@@ -58,11 +58,10 @@ class FuzzyRule:
         :return: a list of fuzzified inputs (same size as the number of
         antecedents) for this particular rule
         """
-
         fuzzified_inputs_for_rule = []
         for (lv_name, crisp_input) in crisp_inputs.items():
             # this flag is set to True if the LV with a given name exists in
-            # the antecendent list
+            # the antecendents list
             lv_exists = False
             # membership function of the linguistic value
             mf = None
@@ -80,8 +79,8 @@ class FuzzyRule:
                     mf = lvalue_dict[ant.lv_value]
                     is_not = ant.is_not
                     break
-            if(lv_exists == False):
-                assert lv_exists == True, "Invalid linguistic variable name: " + lv_name
+            if not lv_exists:
+                continue
             # Fuzzify the MF previously found at the given point
             fuzzified_value = np.interp(crisp_input, mf.in_values, mf.mf_values)
             # Apply the NOT operator if needed
